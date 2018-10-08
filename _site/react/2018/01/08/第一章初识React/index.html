@@ -83,7 +83,7 @@
 <link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="" />
+  <meta name="keywords" content="React," />
 
 
 
@@ -111,17 +111,17 @@
 
 
 
-<meta name="description" content="This post contains 3 categories. Make sure your theme can display all of the categories.">
-<meta name="keywords" content="Jekyll, NexT">
+<meta name="description" content="开始学习React ！！！！！">
+<meta name="keywords" content="React">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Categories">
-<meta property="og:url" content="http://localhost:4000/foo/bar/baz/2013/12/25/categories/">
+<meta property="og:title" content="第一章 初识React">
+<meta property="og:url" content="http://localhost:4000/react/2018/01/08/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%88%9D%E8%AF%86React/">
 <meta property="og:site_name" content="面壁计划">
-<meta property="og:description" content="This post contains 3 categories. Make sure your theme can display all of the categories.">
+<meta property="og:description" content="开始学习React ！！！！！">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Categories">
-<meta name="twitter:description" content="This post contains 3 categories. Make sure your theme can display all of the categories.">
+<meta name="twitter:title" content="第一章 初识React">
+<meta name="twitter:description" content="开始学习React ！！！！！">
 
 
 <script type="text/javascript" id="hexo.configurations">
@@ -154,7 +154,7 @@
 
 
 
-  <title>Categories | 面壁计划</title>
+  <title>第一章 初识React | 面壁计划</title>
   
 
 
@@ -304,7 +304,7 @@
   
 
   <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/foo/bar/baz/2013/12/25/categories/">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/react/2018/01/08/%E7%AC%AC%E4%B8%80%E7%AB%A0%E5%88%9D%E8%AF%86React/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FaceWaller">
@@ -324,7 +324,7 @@
           <h1 class="post-title" itemprop="name headline">
           
           
-            Categories
+            第一章 初识React
           
         </h1>
         
@@ -338,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-12-25T07:30:09+08:00">
-                2013-12-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T19:20:30+08:00">
+                2018-01-08
               </time>
             
 
@@ -362,32 +362,8 @@
               
                 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Foo" itemprop="url" rel="index">
-                    <span itemprop="name">Foo</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Bar" itemprop="url" rel="index">
-                    <span itemprop="name">Bar</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/#/Baz" itemprop="url" rel="index">
-                    <span itemprop="name">Baz</span>
+                  <a href="/category/#/React" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
                   </a>
                 </span>
 
@@ -409,6 +385,10 @@
           
 
           
+            
+                <div class="post-description">
+                    
+                </div>
             
           
 
@@ -437,7 +417,167 @@
 
 
 
-  <p>This post contains 3 categories. Make sure your theme can display all of the categories.</p>
+  <p>开始学习React ！！！！！</p>
+
+<h1 id="react简介">React简介</h1>
+
+<h3 id="react的特点">React的特点</h3>
+<ul>
+  <li>声明式的视图层
+  采用javascript语法来声明视图层,因此可以在视图层随意使用各种状态数据</li>
+  <li>简单的更新流程
+  只需要定义UI状态,React便会负责把它渲染成最终的UI.从状态到UI这一单向数据流让React组件的更新流程清晰简洁</li>
+  <li>灵活的渲染实现
+  React把视图渲染为虚拟DOM(普通的JavaScript对象),再结合其他依赖库把这个对象渲染成不同终端上的UI.</li>
+  <li>高效的DOM操作
+  虚拟DOM是普通的JavaScript对象,有了这一隔离层,操作方便了很多.</li>
+</ul>
+
+<h1 id="es-6语法简介">ES 6语法简介</h1>
+
+<h2 id="letconst">let、const</h2>
+
+<blockquote>
+  <p>let和const都是块级作用域，const声明一个只读的常量，一旦声明值就不能改变。</p>
+</blockquote>
+
+<h2 id="箭头函数">箭头函数</h2>
+
+<blockquote>
+  <p>ES6允许使用箭头定义函数</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18</pre></td><td class="code"><pre class="highlight"><code>var f = a =&gt; a + 1; 
+等价于
+var f = function(a){
+	return a + 1;
+}
+
+
+function foo(){
+	this.bar = 1;
+	this.f = (a) =&gt; a + this.bar;
+}	
+等价于
+function foo(){
+	this.bar = 1;
+	this.f = (function(a){
+		return a + this.bar
+	}).bind(this);	
+}
+</code></pre></td></tr></tbody></table></div>
+</div>
+
+<p>如果箭头函数的参数多于1个或者不需要参数,就需要使用一个圆括号代表参数部分</p>
+
+<h2 id="模板字符串">模板字符串</h2>
+
+<blockquote>
+  <p>模板字符串是增强版的字符串,用反引号标识字符串,除了可以当作普通字符串外,还可以用来定义多行字符串,以及在字符串中嵌入变量.</p>
+</blockquote>
+
+<h2 id="解构赋值">解构赋值</h2>
+
+<blockquote>
+  <p>ES6允许按照一定模式从数组和对象中提取值,对变量进行赋值,这被称为解构</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9</pre></td><td class="code"><pre class="highlight"><code>let person = {name: 'Lily', age:4};
+let {name,age} = person;
+name //'Lily'
+age //4
+
+function sum([x,y]){
+	return x+y;	
+}
+sum([1,2]); //3
+</code></pre></td></tr></tbody></table></div>
+</div>
+
+<h2 id="rest参数">rest参数</h2>
+
+<blockquote>
+  <p>ES6引入rest参数用于获取函数的多余参数</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5</pre></td><td class="code"><pre class="highlight"><code>function languages(lang, ... types){
+	console.log(types);
+}
+
+languages('JavaScript','Java','C++');
+</code></pre></td></tr></tbody></table></div>
+</div>
+
+<h2 id="扩展运算符">扩展运算符</h2>
+
+<blockquote>
+  <p>扩展运算符是三个点… 他将一个数组转为用逗号分隔的参数序列,类似于rest参数的逆运算</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5</pre></td><td class="code"><pre class="highlight"><code>function sum(a,b,c){
+	return a + b + c;
+}
+let numbers = [1,2,3];
+sum(... numbers);     //6
+</code></pre></td></tr></tbody></table></div>
+</div>
+
+<h2 id="class">class</h2>
+
+<blockquote>
+  <p>ES6引入了class(类)这个概念,新的class写法让对象原型的写法更加清晰,也更像传统的面向对象编程语言的写法</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><table style="margin: 0px"><tbody><tr><td class="gutter"><pre>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16<br/>17<br/>18<br/>19<br/>20<br/>21<br/>22<br/>23<br/>24<br/>25<br/>26<br/>27<br/>28<br/>29<br/>30<br/>31<br/>32<br/>33<br/>34</pre></td><td class="code"><pre class="highlight"><code>//定义一个类
+class Person{
+	
+	constructor(name.age){
+		this.name = name;
+		this.age = age;
+	}
+	
+	getName(){
+		return this.name;
+	}
+	
+	getAge(){
+		return this.age;
+	}
+}
+
+
+//根据类创建对象
+let person = new('Lily',4);
+
+//class之间可以通过extends关键字实现继承
+class Man extends Person{
+	
+	constructor(name.age){
+		super(name,age);
+	}
+	
+	getGender(){
+		return 'male';
+	}
+}
+
+let man = new Man('Jack',20);
+</code></pre></td></tr></tbody></table></div>
+</div>
+
+<h2 id="importexport">import、export</h2>
+
+<blockquote>
+  <p>ES6实现了自己的模块化标准,ES6模块功能主要由两个关键字构成:export和import. export用于规定模块对外暴露的接口,import用于引入其他模块提供的接口</p>
+</blockquote>
+
+<h1 id="开发环境及工具">开发环境及工具</h1>
+
+<blockquote>
+  <p>工步他始能詩的，裝進分星海演意學值例道……於財型目古香亮自和這乎？化經溫詩。只賽嚴大一主價世哥受的沒有中年即病行金拉麼河。主小路了種就小為廣不？</p>
+</blockquote>
+
+<!-- *From [亂數假文產生器 - Chinese Lorem Ipsum](http://www.richyli.com/tool/loremipsum/)* -->
 
 
       
@@ -466,34 +606,21 @@
 
     <footer class="post-footer">
       
-
-      
-      
-      
-      
-      
-
-      
-      
-        <div class="post-nav" id="post-nav-id">
-          <div class="post-nav-next post-nav-item">
+        <div class="post-tags">
+          
             
-              <a href="/foo/2013/12/25/long-title/" rel="next" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo turpis, tincidunt ac convallis id.">
-                <i class="fa fa-chevron-left"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo turpis, tincidunt ac convallis id.
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/foo/2013/12/25/link-post/" rel="prev" title="Link Post">
-                Link Post <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+            <a href="/tag/#/React" rel="tag"># React</a>
+          
         </div>
+      
+
+      
+      
+      
+      
+      
+
+      
       
       
 
@@ -546,15 +673,24 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/assets/images/avatar.gif"
                alt="FaceWaller" />
           <p class="site-author-name" itemprop="name">FaceWaller</p>
            
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">向上的青春，终将长成最好的模样</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -562,7 +698,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -573,7 +709,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -584,7 +720,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -618,6 +754,34 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-1"> <a class="nav-link" href="#react简介"> <span class="nav-number">1</span> <span class="nav-text">React简介</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-3"> <a class="nav-link" href="#react的特点"> <span class="nav-number">1.1</span> <span class="nav-text">React的特点</span> </a> </li> </ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#es-6语法简介"> <span class="nav-number">2</span> <span class="nav-text">ES 6语法简介</span> </a> <ol class="nav-child"> <li class="nav-item nav-level-2"> <a class="nav-link" href="#letconst"> <span class="nav-number">2.1</span> <span class="nav-text">let、const</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#箭头函数"> <span class="nav-number">2.2</span> <span class="nav-text">箭头函数</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#模板字符串"> <span class="nav-number">2.3</span> <span class="nav-text">模板字符串</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#解构赋值"> <span class="nav-number">2.4</span> <span class="nav-text">解构赋值</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#rest参数"> <span class="nav-number">2.5</span> <span class="nav-text">rest参数</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#扩展运算符"> <span class="nav-number">2.6</span> <span class="nav-text">扩展运算符</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#class"> <span class="nav-number">2.7</span> <span class="nav-text">class</span> </a> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#importexport"> <span class="nav-number">2.8</span> <span class="nav-text">import、export</span> </a> </li> </ol> </li> <li class="nav-item nav-level-1"> <a class="nav-link" href="#开发环境及工具"> <span class="nav-number">3</span> <span class="nav-text">开发环境及工具</span> </a> </li>
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
