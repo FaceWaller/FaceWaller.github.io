@@ -1,6 +1,6 @@
 ---
 layout: post                        ## 文章使用的模板
-title: 第五章 虚拟DOM和性能优化 		## 文章的标题
+title: <<React进阶之路>> 第五章 虚拟DOM和性能优化 		## 文章的标题
 date: 2018-11-2 17:10:00			## 发布时间
 author: "FaceWaller"                ## 作者
 categories: React
