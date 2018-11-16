@@ -1,6 +1,6 @@
 ---
 layout: post                        ## 文章使用的模板
-title: <<React进阶之路>> 第一章 初识React  				## 文章的标题
+title: React进阶之路 第一章 初识React  				## 文章的标题
 date: 2018-10-8 11:20:30			## 发布时间
 author: "FaceWaller"                ## 作者
 categories: React
