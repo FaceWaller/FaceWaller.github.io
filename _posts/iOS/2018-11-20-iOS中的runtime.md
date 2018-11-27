@@ -231,4 +231,15 @@ tags: iOS runtime
 	id imp_getBlock(IMP anImp)
 	BOOL imp_removeBlock(IMP anImp)
 	
+# runtime的应用
+>网上的教程很多 不详细写了
+## 字典转模型
+>使用class_copyPropertyList可以遍历model的所有属性,json按照对应的属性进行赋值.
+
+## 防止button点击两次
+>使用objc_getAssociatedObject,全局给UIButton添加一个时间间隔属性,两次点击间隔大于这个间隔才会执行方法.
+
+## 防崩溃
+>主要利用消息转发机制,可将崩溃的消息都发送到靶类进行统一处理,参考网易大白健康系统.
+
 	
