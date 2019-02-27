@@ -20,7 +20,7 @@ tags: iOS Runloop
 
 >runloopmode可以在runloop监听过程中过滤掉不关心的事件源，专注于某些特定的事件。
 
-<!--![avatar](http://blog.leichunfeng.com/images/object_model.png)-->
+![avatar](https://github.com/FaceWaller/blogImages/blob/master/runloop/Predefinedrunloopmodes.png?raw=true)
 
 当有 UI 滑动事件时，系统会将main runloop切换到NSEventTrackingRunLoopMode，以限定此时的事件源，确保滑动的流畅性.
 
