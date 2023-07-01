@@ -1,0 +1,112 @@
+# 2023-04-08- 一文读懂Rust宏（一） ---- 声明式宏
+
+# 宏介绍
+
+Rust宏是一种在编译时执行的代码生成器，它允许Rust程序员编写自定义代码，以提高代码复用性和性能。宏可以使用类似于模板的语法，将代码模板与特定参数组合起来生成代码，也可以执行元编程操作，如动态代码生成和类型检查。Rust宏广泛应用于标准库和第三方库中，可以生成常见的代码模式，例如声明和实现接口、代码重复、状态机和解析器等。Rust宏提供了强大的编译时编程工具，是Rust编程语言中不可或缺的一部分。
+
+在传统语言中，宏通常只是进行文本的替换，而在rust中可以可以做到更多，相应的也就更加复杂难学；
+
+Rust宏与其他语言宏的区别主要有以下几点：
+
+1. 编译时执行：Rust宏是在编译时执行的，而其他语言的宏通常是在运行时执行的。
+2. 强类型支持：Rust宏在执行时能够进行类型检查，因此可以保证生成的代码是类型安全的。
+3. 元编程能力：Rust宏可以进行元编程，即生成代码的代码，可以在编译时进行各种计算和类型检查，从而使生成的代码更加灵活和高效。
+4. 代码生成器：Rust宏可以作为代码生成器，为Rust程序员提供自定义的代码生成能力，以提高代码的复用性和性能。
+5. 模式匹配：Rust宏可以使用类似于模式匹配的语法，可以方便地处理各种复杂的代码结构。
+
+综上所述，Rust宏具有更加强大的编译时编程和代码生成能力，可以为Rust程序员提供更高效、更安全、更灵活的编程体验。
+
+# 宏分类
+
+我们常见的宏大致可以分为以下几类：
+
+### 声明式宏 *macro_rules!*
+
+### 派生宏 proc_macro_derive
+
+### 属性宏 proc_macro_attribute
+
+也有文章将派生宏和属性宏归属于过程式宏，这里不展开讨论；
+
+# 声明式宏
+
+声明式宏允许开发者以类似于函数的形式定义宏，并通过参数匹配和模板替换的方式来生成代码。
+
+基本语法如下
+
+```rust
+macro_rules! macro_name {
+    // 匹配模式和模板替换
+    (pattern1) => { /* code1 */ };
+    (pattern2) => { /* code2 */ };
+    // 更多模式和模板替换
+}
+```
+
+其中 macro_name 是宏的名字， pattern是匹配的模式， code是需要替换的代码; 我们常用的 println! 、vec! 就都是声明式宏；
+
+俗话说魔鬼藏在细节之中，下面我们将尝试写一个map生成宏，并在这个过程中学习写声明式宏的一些细节；
+
+```rust
+#[macro_export]
+macro_rules! hashmap {
+    ($ ($key: expr => $val: expr),*  ) => {                                             
+        {             
+            let mut map = std::collections::HashMap::new(); 
+            $(  map.insert($key, $val);  )*                        
+             map         
+        }                            
+    }; 
+} 
+
+/// 测试代码
+#[test]
+fn test_hashmap() {
+    let map = hashmap!(1 => "one", 2=> "two", 3=> "three" );
+    println!("map {:?} ",map);
+}
+```
+
+像上面这样就实现了一个简单的map宏，
+
+**#[macro_export]** 表示该宏导出可供其他包使用
+
+**macro_rules! hashmap** 表示该宏的名字是 hashmap
+
+**( $ ($key: expr => val: expr),\* )** 这一段是匹配参数，属于最难理解的部分， ( xxx ),* 格式表明对参数匹配时可以对xxx部分进行0次或若干次匹配(这里*的作用类似于正则表示式的 *, 当然也可以换成 ? "0或1次 或者 + "至少1次" ) ，xxx参数用逗号进行分隔且最后一次匹配不能有逗号；$key: expr => $val: expr 是参数的格式，expr代表匹配的类型，可以是任何有效的rust表达式；*
+
+**(map.insert(( map.insert((map.insert(key, val); )*** 进行代码的执行，执行次数与上面参数匹配的次数相同，key $val就是每次匹配到参数的值
+
+但我们还可以优化一下，可以增加对空map时情况的兼容；同时仔细分析上面的代码可以发现如果最后一次匹配遇到逗号的情况也会报错，也就是 *let map = hashmap!(1 => "one", 2=> "two", 3=> "three", );* 会因为最后一次逗号的出现而报错，这种情况也需要做兼容；
+
+```rust
+#[macro_export]
+macro_rules! hashmap {
+    () => { std::collections::HashMap::new() };
+    ($ ($key: expr => $val: expr),+ $(,)?  ) => {          
+                                                    
+        {             
+            let mut map = std::collections::HashMap::new();             
+            $(  map.insert($key, $val);  )+                        
+             map         
+        }                            
+    }; 
+} 
+
+use std::collections::HashMap;
+/// 测试代码
+#[test]
+fn test_hashmap() {
+    let map1: HashMap<i32, &str> = hashmap!();
+    let map2 = hashmap!(1 => "one", 2=> "two", 3=> "three" );
+    let map3 = hashmap!(1 => "one", 2=> "two", 3=> "three", );
+}
+```
+
+这里主要有两处修改，
+
+一个是增加了 () => { std::collections::HashMap::new() }; 匹配空map的情况，
+
+另一处是匹配模式的修改 ($ ($key: expr => $val: expr),+ (,)? ) 将*改为了+表示至少需要匹配一次,后面的(,)?可以匹配（0或1次）最后一次出现的逗号；
+
+这样就完成了一个map宏
