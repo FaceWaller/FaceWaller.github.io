@@ -1,0 +1,88 @@
+---
+layout: post                        ## 文章使用的模板
+title: 一文读懂Rust宏（三） ---- 属性宏					## 文章的标题
+date: 2023-04-15						## 发布时间
+author: "FaceWaller"                ## 作者
+categories: Rust
+tags: Rust
+---
+
+在 Rust 中，属性宏是一种常见的宏类型，用于添加或修改代码结构中的元数据信息。它们可以被应用于诸如结构体、函数、模块、枚举等各种 Rust 语言元素上。
+
+属性宏的语法形式为 `#[name_of_macro(attribute1, attribute2, ...)]`，其中 `name_of_macro` 是属性宏的名称，`attribute1`、`attribute2` 等是属性宏的参数。
+
+看到这里很多人可能已经把 属性宏和派生宏弄混了；这里我们列举一下他们的区别：
+
+- 作用对象
+  属性宏可以应用于任何 Rust 语言元素，例如结构体、函数、模块、枚举等，用于添加或修改其元数据信息
+  而派生宏仅能应用于结构体或枚举上
+- 代码转换方式
+  属性宏通过宏展开来修改代码结构中的元数据信息
+  而派生宏则会自动生成一些代码，例如实现 trait
+- 语法形式
+  属性宏的语法形式为 `#[name_of_macro(attribute1, attribute2, ...)]`，其中 `name_of_macro` 是属性宏的名称，`attribute1`、`attribute2` 等是属性宏的参数
+  而派生宏的语法形式为 `#[derive(name_of_macro)]`，其中 `name_of_macro` 是派生宏的名称是不能接受参数的
+
+ 老规矩，我们还是通过实现一个属性宏来进行学习
+
+```rust
+use proc_macro::TokenStream;
+use quote::quote;
+use syn::{parse_macro_input, ItemFn};
+
+#[proc_macro_attribute]
+pub fn log_func_info(_: TokenStream, input: TokenStream) -> TokenStream {
+    let mut func = parse_macro_input!(input as ItemFn);
+    let func_name = &func.sig.ident;
+    let func_block = &func.block;
+    let output = quote! {
+        {
+            println!("fun {} starts", stringify!(#func_name));
+            let __log_result = { #func_block };
+            println!("fun {} ends", stringify!(#func_name));
+            __log_result
+        }
+    };
+    func.block = syn::parse2(output).unwrap();
+    quote! { #func }.into()
+}
+
+
+// 测试代码
+#[log_func_info]
+fn my_function() {
+    println!("Hello, world!");
+}
+
+#[test]
+fn test_func() {
+    my_function();
+}
+
+```
+
+**#[proc_macro_attribute]** 用来标记该宏，宏的名字就是 log_func_info ；该函数宏可以接受两个参数，第一个为宏参数，由于我们的demo并没有参数所以使用了_ ，第二个参数就是被我们的宏标记的函数的信息；
+
+**let mut func = parse_macro_input!(input as ItemFn);** 将输入的结构体或函数解析为ItemFn，与上一篇解析为**DeviceInfo** 不同，DeriveInput只能解析结构体或枚举，而ItemFn则表示函数定义;
+
+```rust
+pub struct ItemFn {
+		pub attrs: Vec<Attribute>,
+		pub vis: Visibility,
+		pub sig: Signature,
+		pub block: Box<Block>,
+}
+```
+
+**let func_name = &func.sig.ident;**  获取到函数的名字
+
+**let func_block = &func.block;**  获取了函数的实现部分，也是我们想要改写的部分
+
+接下来的output部分就是我们改写的函数实现，分别在函数执行的前后打印了 start和end信息，并借助syn库重新把我们的代码封装为Box再塞回给原函数；
+
+这样就可以针对函数的开始和结束进行打印了，方便日常工作中的调试；
+
+# 源码地址
+
+https://github.com/FaceWaller/pzmacro
+
