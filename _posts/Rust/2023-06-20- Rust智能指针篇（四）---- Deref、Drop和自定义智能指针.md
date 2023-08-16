@@ -44,17 +44,23 @@ pub trait Drop {
 
 首先来看这样一段代码：
 
+```rust
 fn main() {
     let x = 5;
     let y = &x;
     assert_eq!(5,x);
     assert_eq!(5,*y);
-  
+
   	let b = Box::new(5);
     assert_eq!(*b, 5);
 }
-三个assert语句都能通过； 常规的引用y通过解引用符号*可以获得原始值5，这很容易理解，但奇怪的是，我们对Box使用*也可以获得原始值； 这是因为Box实现了上面提到的Deref trait ，在使用*时会自动调用deref函数,我们查阅源码可以看到：
+```
 
+三个assert语句都能通过； 常规的引用y通过解引用符号*
+
+可以获得原始值5，这很容易理解，但奇怪的是，我们对Box使用*也可以获得原始值； 这是因为Box实现了上面提到的Deref trait ，在使用*时会自动调用deref函数,我们查阅源码可以看到：
+
+```rust
 impl<T: ?Sized, A: Allocator> const Deref for Box<T, A> {
     type Target = T;
     fn deref(&self) -> &T {
@@ -88,8 +94,8 @@ fn main() {
     let b = MyBox::new(5);
     let v1 = *b;
     let v2 = *(b.deref());  // 这样调用也是一样的
-}
-这里很多人可能会有一点疑问，为什么官方Box的deref返回值是&**self而我们自定义的只是&self.value呢；这里要说一下，我们的MyBox只是一个简单的模仿，并没有Box开辟堆空间的能力而是把value存储在内存中；
+}这里很多人可能会有一点疑问，为什么官方Box的deref返回值是&**self而我们自定义的只是&self.value呢；这里要说一下，我们的MyBox只是一个简单的模仿，并没有Box开辟堆空间的能力而是把value存储在内存中；
+```
 
 查阅源码可以看到，官方Box的定义是：
 

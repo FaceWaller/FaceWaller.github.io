@@ -32,6 +32,7 @@ RefCell 是一个更复杂的类型，可以在运行时进行借用检查。与
 
 假设有这样一个处理信息的特征，以及两个遵守特征的结构体：
 
+```rust
 trait SourceHandleTrait {
     fn handle(&self, msg: String);
 }
@@ -65,10 +66,12 @@ impl SourceHandleTrait for SourceHandle2 {
         self.msgs.borrow_mut().push(msg)
     }
 }
+```
+
 通过RefCell修饰，即使没有mut，仍然可以修改msgs；使用borrow或者borrow_mut去获取它包装的值，这里因为要对数组进行修改，因此我们使用borrow_mut
 
 完整代码如下：
-
+```rust
 use std::cell::RefCell;
 trait SourceHandleTrait {
     fn handle(&self, msg: String);
@@ -99,18 +102,21 @@ fn handle_source() {
     let s1 = SourceHandle1{};
     s1.handle(str1);
 
-    let str2 = "source string2".to_string();
-    let s2 = SourceHandle2{
-        msgs: RefCell::new(vec![])
-    };
-    s2.handle(str2);
+		let str2 = "source string2".to_string();
+		let s2 = SourceHandle2{
+    		msgs: RefCell::new(vec![])
+		};
+		s2.handle(str2);
 }
+```
+
 Rc与RefCell结合
 
 rc的特点是允许有多个所有者，RefCell是允许修改数据，将他们结合起来就可以实现多个可变数据所有者的需求；
 
 假设有这样一个场景，两份表格里面包含了同一个人的信息，我们希望在修改这个人的信息时，两份表格能够自动跟随变化；这时就可以考虑将Rc与RefCell结合使用，代码如下：
 
+```rust
 use std::{cell::RefCell, rc::Rc};
 
 #[derive(Debug)]
@@ -127,33 +133,33 @@ struct Personal {
 
 #[test]
 fn handle_source() {
+let person = Personal {
+    age: RefCell::new(10),
+    name: "alan".to_string()
+};
+let rc_personal = Rc::new(person);
 
-    let person = Personal {
-        age: RefCell::new(10),
-        name: "alan".to_string()
-    };
-    let rc_personal = Rc::new(person);
+let n1 = Number {
+    id: 1001,
+    p: rc_personal.clone()
+};
 
-    let n1 = Number {
-        id: 1001,
-        p: rc_personal.clone()
-    };
+let n2 = Number {
+    id: 2002,
+    p: rc_personal.clone()
+};
 
-    let n2 = Number {
-        id: 2002,
-        p: rc_personal.clone()
-    };
+println!("person {:?}", rc_personal);
+println!("n1 {:?}", n1);
+println!("n2 {:?}", n2);
 
-    println!("person {:?}", rc_personal);
-    println!("n1 {:?}", n1);
-    println!("n2 {:?}", n2);
+*rc_personal.clone().age.borrow_mut() = 20; 
+println!("============= 修改年龄 =============");
 
-    *rc_personal.clone().age.borrow_mut() = 20; 
-    println!("============= 修改年龄 =============");
-
-    println!("person {:?}", rc_personal);
-    println!("n1 {:?}", n1);
-    println!("n2 {:?}", n2);
+println!("person {:?}", rc_personal);
+println!("n1 {:?}", n1);
+println!("n2 {:?}", n2);
+```
 
 }
 首先我们定义了表格struct，其中包含一个p字段，类型为Rc包装的Personal，有了Rc的包装就可以保证多个结构体都可以持用同一个Personal; 接下来是Personal结构体，我们假定age是要变化的所以age的类型是用RefCell包装的；
